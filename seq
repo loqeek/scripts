@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# License:   GNU/LGPL (http://www.gnu.org/licenses/lgpl.html)
+# Copyright: 2011 Wojciech Szaranski, Poland
+
+MIN=1
+STEP=1
+
+case "$#" in
+  "1") MAX=$1;;
+  "2") MAX=$2; MIN=$1;;
+  "3") MAX=$3; MIN=$1; STEP=$2;;
+  *) printf "Usage: seq [OPTION]... LAST\nor:  seq [OPTION]... FIRST LAST\nor:  seq [OPTION]... FIRST INCREMENT LAST\n";;
+esac
+
+if [ $MAX ]; then
+  NEWMAX=$[$MAX - $[$[$MAX-$MIN] % $STEP]];
+  STEPS=$[$[$[$NEWMAX-$MIN] / $STEP]+1];
+
+  jot $STEPS $MIN $NEWMAX;
+
+fi
